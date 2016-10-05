@@ -1,5 +1,7 @@
 # Fonzo
 
+![layout](layout/fonzo.jpg)
+
 ### Developers
 - [Jonathan](https://github.com/jonathanslima)
 
