@@ -1,3 +1,6 @@
 *.psd
 .DS_Store
 _stuffs/
+dist/
+bower_components/
+node_modules/
