@@ -1,0 +1,14 @@
+## Arquivo de configuração
+
+application: fonzo-website
+runtime: php55
+api_version: 1
+version: web
+
+handlers:
+  - url: /
+    static_files: index.html
+    upload: index.html
+
+  - url: /
+    static_dir: src/
