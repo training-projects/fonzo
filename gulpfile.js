@@ -20,7 +20,7 @@ var gulp					= require('gulp'),
 var src_path = {
 	jquery		: 'bower_components/jquery/dist/jquery.min.js',
 	normalize	: 'bower_components/normalize-css/normalize.css',
-	stylus			: 'src/assets/css/**/*.styl',
+	stylus		: 'src/assets/css/**/*.styl',
 	html			: 'src/**/*.html',
 	js				: 'src/**/*.js',
 	img				: 'src/**/*'
@@ -68,7 +68,7 @@ var dist_path = {
 					poststylus(['autoprefixer', 'lost'])
 				]
 			}))
-			.pipe(gulp.dest(dist_path.css))
+			.pipe(gulp.dest('dist/assets/css/'));
 	});
 
 // HTML minify
@@ -85,7 +85,7 @@ var dist_path = {
 	gulp.task('minifyjs', function() {
 		gulp.src(src_path.js)
 			.pipe(uglify())
-			.pipe(gulp.dest(dist_path.js))
+			.pipe(gulp.dest(dist_path.js));
 	});
 
 // Watch
@@ -94,7 +94,7 @@ var dist_path = {
 		gulp.watch(src_path.html,			['minifyhtml']);
 		gulp.watch(src_path.js,				['minifyjs']);
 		gulp.watch(src_path.img,			['minifyimg']);
-		gulp.watch(src_path.stylus),	['stylus_css'];
+		gulp.watch(src_path.stylus,		['stylus_css']);
 	});
 
 // Browser Sync
@@ -110,5 +110,5 @@ var dist_path = {
 
 gulp.task('copy', ['copyJS', 'copyCSS']);
 gulp.task('lost-stylus', ['stylus_css']);
-gulp.task('default', ['watch', 'minifyimg', 'minifyhtml', 'lost-stylus', 'minifyjs', 'browser-sync']);
+gulp.task('default', ['watch', 'minifyimg', 'minifyhtml', 'minifyjs', 'browser-sync']);
 
