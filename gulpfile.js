@@ -22,8 +22,8 @@ var src_path = {
 	normalize	: 'bower_components/normalize-css/normalize.css',
 	stylus		: 'src/assets/css/**/*.styl',
 	html			: 'src/**/*.html',
-	js				: 'src/**/*.js',
-	img				: 'src/**/*'
+	js				: 'src/assets/scripts/*.js',
+	img				: 'src/assets/images/*'
 };
 
 var dist_path = {
@@ -68,7 +68,7 @@ var dist_path = {
 					poststylus(['autoprefixer', 'lost'])
 				]
 			}))
-			.pipe(gulp.dest('dist/assets/css/'));
+			.pipe(gulp.dest(dist_path.css));
 	});
 
 // HTML minify

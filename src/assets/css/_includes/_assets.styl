@@ -1,0 +1,32 @@
+// Variables
+mainGreen 	= #52a567
+mainWhite 	= #fff
+mainBlack		= #444
+mainGray 		= #9a9a9a
+grayDark  	= #242527
+grayDarker 	= #1b1c20
+
+
+// Mixins
+transition(n)
+	-webkit-transition n
+	-moz-transition n
+	-ms-transition n
+	-o-transition n
+	transition n
+
+/* Generals */
+*
+	font-family: "Open Sans"
+
+.button
+	background-color: mainWhite
+	color: mainBlack
+	padding: 10px 15px
+	border-radius: 5px
+	font-size: 12px
+	margin-bottom: 20px
+	text-decoration: none
+	transition(all 0.3s)
+	&:hover
+		box-shadow: 3px 3px 5px mainBlack
