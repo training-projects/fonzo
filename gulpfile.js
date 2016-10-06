@@ -1,8 +1,6 @@
 // Variables with all technologies.
 // ----------------------------------------------------------------------
 var gulp					= require('gulp'),
-		concatcss			= require('gulp-concat-css'),
-		concatjs			= require('gulp-concat-js'),
 		copy					= require('gulp-contrib-copy'),
 		cssmin				= require('gulp-cssmin'),
 		imagemin			= require('gulp-imagemin'),
@@ -13,37 +11,28 @@ var gulp					= require('gulp'),
 		uglify				= require('gulp-uglify'),
 		watch					= require('gulp-watch'),
 		autoprefixer	= require('autoprefixer'),
-		browsersync		= require('browser-sync'),
-		lost					= require('lost');
+		browsersync		= require('browser-sync').create(),
+		lost					= require('lost'),
+		poststylus		= require('poststylus');
 
 // Constants with all directories and files path.
 // ----------------------------------------------------------------------
-
 var src_path = {
 	jquery		: 'bower_components/jquery/dist/jquery.min.js',
 	normalize	: 'bower_components/normalize-css/normalize.css',
-	all				: 'src/**/*',
-	stylus		: 'src/**/*.styl',
-	css				: 'src/**/*.css',
+	stylus			: 'src/assets/css/**/*.styl',
 	html			: 'src/**/*.html',
 	js				: 'src/**/*.js',
 	img				: 'src/**/*'
 };
 
 var dist_path = {
-	dist			: 'dist/',
+	index			: 'dist',
 	html			: 'dist/',
 	css				: 'dist/assets/css/',
 	js				: 'dist/assets/scripts/',
 	img				: 'dist/assets/images/'
 };
-
-// Clean
-// ----------------------------------------------------------------------
-	gulp.task('cleanAll', function(){
-		return gulp.src(dist_path.dist, {read: false})
-			.pipe(clean({force: true}));
-	});
 
 // Copy
 // ----------------------------------------------------------------------
@@ -58,64 +47,68 @@ var dist_path = {
 		gulp.src([src_path.normalize])
 			.pipe(copy())
 			.pipe(gulp.dest('src/assets/css/'))
+			.pipe(cssmin())
 			.pipe(gulp.dest(dist_path.css));
 	});
 
-// Stylus
+// Imagemin
 // ----------------------------------------------------------------------
-	gulp.task('compileStylus', function () {
-		return gulp.src(src_path.stylus)
-			.pipe(sourcemaps.init())
+	gulp.task('minifyimg', function() {
+		gulp.src(src_path.img)
+			.pipe(imagemin())
+			.pipe(gulp.dest(dist_path.img))
+	});
+
+// Stylus with lost
+// ----------------------------------------------------------------------
+	gulp.task('stylus_css', function () {
+		gulp.src(src_path.stylus)
 			.pipe(stylus({
-				compress: true
+				use: [
+					poststylus(['autoprefixer', 'lost'])
+				]
 			}))
-			.pipe(sourcemaps.write())
-			.pipe(gulp.dest(dist_path.dist));
+			.pipe(gulp.dest(dist_path.css))
 	});
 
 // HTML minify
 // ----------------------------------------------------------------------
 	gulp.task('minifyhtml', function() {
-		return gulp.src(src_path.html)
+		gulp.src(src_path.html)
 			.pipe(htmlmin({collapseWhitespace: true}))
-			.pipe(gulp.dest(dist_path.html));
+			.pipe(gulp.dest(dist_path.html))
+			.pipe(browsersync.stream());
 	});
 
-// CSS minify
+// JS Uglify
 // ----------------------------------------------------------------------
+	gulp.task('minifyjs', function() {
+		gulp.src(src_path.js)
+			.pipe(uglify())
+			.pipe(gulp.dest(dist_path.js))
+	});
 
-// CSS minify
+// Watch
 // ----------------------------------------------------------------------
+	gulp.task('watch', function(){
+		gulp.watch(src_path.html,			['minifyhtml']);
+		gulp.watch(src_path.js,				['minifyjs']);
+		gulp.watch(src_path.img,			['minifyimg']);
+		gulp.watch(src_path.stylus),	['stylus_css'];
+	});
 
-// CSS minify
+// Browser Sync
 // ----------------------------------------------------------------------
+	gulp.task('browser-sync', ['stylus_css'], function() {
+		browsersync.init({
+			server: dist_path.index
+		});
 
-// CSS minify
-// ----------------------------------------------------------------------
+		gulp.watch(dist_path.stylus, ['stylus_css']);
+		gulp.watch(dist_path.html).on('chanche', browsersync.reload);
+	});
 
+gulp.task('copy', ['copyJS', 'copyCSS']);
+gulp.task('lost-stylus', ['stylus_css']);
+gulp.task('default', ['watch', 'minifyimg', 'minifyhtml', 'lost-stylus', 'minifyjs', 'browser-sync']);
 
-
-// var paths = {
-//   cssSource: 'src/css/',
-//   cssDestination: 'dist/css/'
-// };
-
-// gulp.task('styles', function() {
-//   return gulp.src(src_path.css)
-//     .pipe(sourcemaps.init())
-//     .pipe(postcss([
-//       lost(),
-//       autoprefixer()
-//     ]))
-//     .pipe(sourcemaps.write('./'))
-//     .pipe(gulp.dest(paths.cssDestination));
-// });
-
-// gulp.watch(dist_path.css, ['styles']);
-
-// gulp.task('clean', ['cleanAll']);
-// gulp.task('copy', ['copyAll', 'copyJS', 'copyCSS']);
-gulp.task('copy', 		['copyJS', 'copyCSS']);
-gulp.task('styl', 		['compileStylus']);
-gulp.task('min-html', ['minifyhtml']);
-gulp.task('default', 	['min-html','styl']);
