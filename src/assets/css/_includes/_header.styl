@@ -1,7 +1,7 @@
 .header
 	background-color: mainGreen
 	padding-top: 25px
-
+	
 	section
 		lost-center: 980px;
 		color: mainWhite
@@ -9,9 +9,13 @@
 			
 		.header-title
 			lost-column: 1/3 0 15px
+			padding: 0 paddRight 0 paddLeft
+			box-sizing: border-box
 			
 		.header-menu
 			lost-column: 2/3 
+			padding: 0 paddRight 0 paddLeft
+			box-sizing: border-box
 			
 			ul 
 				text-align: right
@@ -29,7 +33,10 @@
 		lost-center: 980px;
 		
 		.banner-info
-			lost-column: 1/2 0
+			padding: 0 paddRight 0 paddLeft
+			box-sizing: border-box
+			lost-column: 1/2
+			margin-bottom: 50px
 			h2, h3, p
 				font-size: 1.2em
 				margin-bottom: 20px
@@ -41,7 +48,10 @@
 				font-size: calc(1.2em - .5em)				
 			
 		.banner-icons
-			lost-column: 1/2 0 
+			padding: 0 paddRight 0 paddLeft		
+			text-align: right
+			lost-column: 1/2 
+			box-sizing: border-box
 			
 			ul
 				.icon-pin, 
@@ -97,8 +107,23 @@
 				.icon-badge
 					background-position: -450px -360px
 					
-					
+@media screen and (max-width: 630px)
+
+	.header 
+		section .header-menu
+			display: none
+		
+		.banner 
+			.banner-info
+				lost-column: 1
+				text-align: center
 			
+			.banner-icons 
+				width: 100%
+				text-align: center
+				ul
+					padding: 0
+
 .content
 	lost-center: 980px
 	text-align: center
