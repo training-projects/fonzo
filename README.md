@@ -7,7 +7,6 @@
 
 ### Workflow
 - Bower
-- ES6 - Babel
 - Gulp
 - Google App Engine
 - Lost

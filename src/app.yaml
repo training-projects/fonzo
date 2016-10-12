@@ -11,4 +11,4 @@ handlers:
     upload: index.html
 
   - url: /
-    static_dir: src/
+    static_dir: dist/

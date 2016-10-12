@@ -56,7 +56,7 @@ var dist_path = {
 	gulp.task('minifyimg', function() {
 		gulp.src(src_path.img)
 			.pipe(imagemin())
-			.pipe(gulp.dest(dist_path.img))
+			.pipe(gulp.dest(dist_path.img));
 	});
 
 // Stylus with lost
@@ -68,7 +68,8 @@ var dist_path = {
 					poststylus(['autoprefixer', 'lost'])
 				]
 			}))
-			.pipe(gulp.dest(dist_path.css));
+			.pipe(gulp.dest(dist_path.css))
+			.pipe(browsersync.stream());
 	});
 
 // HTML minify
@@ -105,7 +106,7 @@ var dist_path = {
 		});
 
 		gulp.watch(dist_path.stylus, ['stylus_css']);
-		gulp.watch(dist_path.html).on('chanche', browsersync.reload);
+		gulp.watch(dist_path.html).on('change', browsersync.reload);
 	});
 
 gulp.task('copy', ['copyJS', 'copyCSS']);
