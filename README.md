@@ -1,5 +1,7 @@
 # Fonzo
 
+[See the site here!](https://fonzo-website.appspot.com/) by [@jonathanslima](https://github.com/jonathanslima)
+
 ![layout](layout/fonzo.jpg)
 
 ### Developers
@@ -8,6 +10,17 @@
 ### Workflow
 - Bower
 - Gulp
+	+ autoprefixer
+	+ browser-sync
+	+ gulp
+	+ contrib-copy
+	+ cssmin
+	+ htmlmin
+	+ imagemin
+	+ postcss
+	+ stylus
+	+ uglify
+	+ watch
 - Google App Engine
 - Lost
 - Sprites
