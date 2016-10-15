@@ -28,7 +28,9 @@
 					a
 						color: mainWhite
 						text-decoration: none
-					
+		.header-menu-icon
+			display: none
+			
 	.banner	
 		lost-center: 980px;
 		
@@ -113,8 +115,17 @@
 @media screen and (max-width: 710px)
 
 	.header 
-		section .header-menu
-			display: none
+		section 
+			.header-menu
+				text-align: center
+				width: 100%
+				ul li
+					display: block
+			
+			.header-menu-icon
+				float: right
+				box-sizing: border-box
+				display: block
 		
 		.banner 
 			.banner-info
